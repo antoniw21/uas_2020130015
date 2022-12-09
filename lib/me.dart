@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -70,8 +71,9 @@ class _MeState extends State<Me> {
             identity(Icons.email, "udintampans123@gmail.com"),
             separatorBox(),
             OutlinedButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.pop(context);
+                await FirebaseAuth.instance.signOut();
               },
               child: const Text("Logout"),
             ),
