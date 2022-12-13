@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:uas_2020130015/home_widget.dart';
 import 'package:uas_2020130015/me.dart';
 import 'package:uas_2020130015/movie_page.dart';
@@ -26,32 +27,67 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Digital Cinema"),
-        automaticallyImplyLeading: false,
-      ),
-      body: Container(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
+    Future<bool> onWillPop() {
+      return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text(
+            'Confirm Exit?',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.movie),
-            label: "Movie",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Me",
-          ),
-        ],
-        selectedItemColor: Colors.red,
-        onTap: _onItemTapped,
-        currentIndex: _selectedIndex,
+          content: const Text(
+              'Are you sure you want to exit the app? Tap \'Yes\' to exit \'No\' to cancel.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // this line exits the app.
+                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () =>
+                  Navigator.pop(context), // this line dismisses the dialog
+              child: const Text(
+                'No',
+              ),
+            )
+          ],
+        ),
+      ).then((value) => value ?? false);
+    }
+// use .then((value) => value ?? false)
+
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          // leading: IconButton(
+          //     onPressed: () => onWillPop(), icon: const Icon(Icons.arrow_back)),
+          title: const Text("Digital Cinema"),
+          automaticallyImplyLeading: false,
+        ),
+        body: Container(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.movie),
+              label: "Movie",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: "Me",
+            ),
+          ],
+          selectedItemColor: Colors.red,
+          onTap: _onItemTapped,
+          currentIndex: _selectedIndex,
+        ),
       ),
     );
   }
