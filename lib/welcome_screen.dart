@@ -72,6 +72,8 @@ class LoadingScreen extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 30, width: 0),
+          Text('Created by Antoni Wijaya - 2020130015'),
         ],
       ),
     );
