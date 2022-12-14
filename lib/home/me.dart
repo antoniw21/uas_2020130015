@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
+import '../login/login_page.dart';
 
 class Me extends StatefulWidget {
   const Me({super.key});
@@ -66,14 +65,19 @@ class _MeState extends State<Me> {
             // ),
             separatorBox(),
             separatorBox(),
-            identity(Icons.person, "Udin Wijaya"),
+            identity(Icons.person, ""),
             separatorBox(),
             identity(Icons.email, "udintampans123@gmail.com"),
             separatorBox(),
             OutlinedButton(
               onPressed: () async {
-                Navigator.pop(context);
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ));
                 await FirebaseAuth.instance.signOut();
+                const logoutsuccess =
+                    SnackBar(content: Text('Successfully log out'));
+                ScaffoldMessenger.of(context).showSnackBar(logoutsuccess);
               },
               child: const Text("Logout"),
             ),

@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:uas_2020130015/login_page.dart';
+
+import 'login_page.dart';
 
 class NewAccount extends StatefulWidget {
   const NewAccount({super.key});
@@ -76,11 +77,25 @@ class _NewAccountState extends State<NewAccount> {
                       ],
                     ),
                   );
-                  User? user = credential.user;
-                  await FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(user?.uid)
-                      .set({'email': email.text, 'name': name.text});
+                  FirebaseFirestore db = FirebaseFirestore.instance;
+
+                  // Create a new user with a first and last name
+                  final user = <String, dynamic>{
+                    "name": name.text,
+                    "email": email.text,
+                  };
+
+// Add a new document with a generated ID
+                  db.collection("users").add(user).then(
+                      (DocumentReference doc) =>
+                          print('DocumentSnapshot added with ID: ${doc.id}'));
+
+                  // User? user = credential.user;
+                  // await FirebaseFirestore.instance
+                  //     .collection('users')
+                  //     .doc(user?.uid)
+                  //     .set({'email': email.text, 'name': name.text});
+
                   print('new user created');
                 } on FirebaseAuthException catch (e) {
                   if (name.text.isEmpty) {

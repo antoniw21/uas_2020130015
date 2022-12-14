@@ -1,11 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uas_2020130015/booking_confirmation.dart';
 import 'package:uas_2020130015/booking_page.dart';
-import 'package:uas_2020130015/home.dart';
-import 'package:uas_2020130015/login_page.dart';
-import 'package:uas_2020130015/new_account.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'login/login_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +20,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // String? user = FirebaseAuth.instance.currentUser?.displayName;
+    // print('${user}');
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Digital Cinema',

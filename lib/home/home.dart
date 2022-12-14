@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:uas_2020130015/home_widget.dart';
-import 'package:uas_2020130015/me.dart';
-import 'package:uas_2020130015/movie_page.dart';
+
+import 'home_widget.dart';
+import 'me.dart';
+import 'movie_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,7 +22,13 @@ class _HomePageState extends State<HomePage> {
     Me(),
   ];
 
-  void _onItemTapped(int index) {
+  Future<void> _onItemTapped(int index) async {
+    // User? user = FirebaseAuth.instance.currentUser;
+    // FirebaseFirestore db = FirebaseFirestore.instance;
+    // await db.collection("users").doc("${user?.uid}").get().then((event) {
+    //   print("${event.get("name")}");
+    // });
+
     setState(() {
       _selectedIndex = index;
     });
