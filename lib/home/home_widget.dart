@@ -96,11 +96,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           margin: const EdgeInsets.only(bottom: 5),
                           height: 100,
                           width: 100,
+                          child: Image.network(
+                              'https://firebasestorage.googleapis.com/v0/b/uas-2020130015.appspot.com/o/severance?alt=media&token=16da72c8-80db-453f-8c1c-e0486640ee73'),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            image: const DecorationImage(
-                              image: AssetImage("assets/images/batman.jpeg"),
-                            ),
                           ),
                         ),
                         Container(
@@ -125,24 +124,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 }
 
 Widget _pageItem(int index, dynamic context) {
-  return IconButton(
-    // height: 220,
-    // margin: const EdgeInsets.only(left: 5, right: 5),
-    // decoration: BoxDecoration(
-    //   color: index.isEven ? const Color(0xff7c94b6) : Colors.amber,
-    //   borderRadius: BorderRadius.circular(30),
-    //   image: const DecorationImage(
-    //     fit: BoxFit.fill,
-    //     image: AssetImage('assets/images/wakanda.jpeg'),
-    //   ),
-    // ),
-    icon: Image.asset('assets/images/batman.jpeg', fit: BoxFit.fill),
-    onPressed: () {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const DescriptionFilm(),
-          ));
-    },
+  return Container(
+    padding: EdgeInsets.all(10),
+    child: IconButton(
+      icon: Image.network(
+          'https://firebasestorage.googleapis.com/v0/b/uas-2020130015.appspot.com/o/severance?alt=media&token=16da72c8-80db-453f-8c1c-e0486640ee73',
+          fit: BoxFit.fill),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DescriptionFilm(),
+            ));
+      },
+    ),
   );
 }

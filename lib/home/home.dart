@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,13 +20,7 @@ class _HomePageState extends State<HomePage> {
     Me(),
   ];
 
-  Future<void> _onItemTapped(int index) async {
-    // User? user = FirebaseAuth.instance.currentUser;
-    // FirebaseFirestore db = FirebaseFirestore.instance;
-    // await db.collection("users").doc("${user?.uid}").get().then((event) {
-    //   print("${event.get("name")}");
-    // });
-
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });

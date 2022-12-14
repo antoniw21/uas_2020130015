@@ -86,10 +86,10 @@ class _NewAccountState extends State<NewAccount> {
                   };
 
 // Add a new document with a generated ID
-                  db.collection("users").add(user).then(
-                      (DocumentReference doc) =>
-                          print('DocumentSnapshot added with ID: ${doc.id}'));
-
+                  db
+                      .collection("users")
+                      .doc('${credential.user?.uid}')
+                      .set(user);
                   // User? user = credential.user;
                   // await FirebaseFirestore.instance
                   //     .collection('users')

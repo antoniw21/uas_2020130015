@@ -54,11 +54,10 @@ class MoviePageState extends State<MoviePage> {
                         margin: const EdgeInsets.only(bottom: 5),
                         height: 100,
                         width: 100,
+                        child: Image.network(
+                            'https://firebasestorage.googleapis.com/v0/b/uas-2020130015.appspot.com/o/Black%20Bird?alt=media&token=47af3e56-3990-465d-ade4-3ebbb6e70dd6'),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          image: const DecorationImage(
-                            image: AssetImage("assets/images/batman.jpeg"),
-                          ),
                         ),
                       ),
                       Container(

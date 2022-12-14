@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uas_2020130015/user_login.dart';
 
 import '../login/login_page.dart';
 
@@ -51,23 +52,13 @@ class _MeState extends State<Me> {
             separatorBox(),
             const CircleAvatar(
               radius: 48,
-              backgroundImage: AssetImage("assets/images/thor.jpeg"),
+              backgroundImage: AssetImage("assets/images/noprofile.jpeg"),
             ),
-            // Container(
-            //   decoration: const BoxDecoration(
-            //     shape: BoxShape.circle,
-            //   ),
-            //   child: const Image(
-            //     image: AssetImage(
-            //       "assets/images/drstrange.jpeg",
-            //     ),
-            //   ),
-            // ),
             separatorBox(),
             separatorBox(),
-            identity(Icons.person, ""),
+            identity(Icons.person, u.getName),
             separatorBox(),
-            identity(Icons.email, "udintampans123@gmail.com"),
+            identity(Icons.email, u.getEmail),
             separatorBox(),
             OutlinedButton(
               onPressed: () async {

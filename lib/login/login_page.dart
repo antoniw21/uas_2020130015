@@ -3,10 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uas_2020130015/user_login.dart';
 import 'package:uas_2020130015/welcome_screen.dart';
 
 import '../home/home.dart';
 import 'new_account.dart';
+
+UserLogin u = UserLogin();
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 5),
       () {
         return firebaseApp;
       },
@@ -237,12 +240,13 @@ Widget button(
             builder: (context) => const HomePage(),
           ),
         );
-
         String nn = "";
         User? user = credential.user;
         FirebaseFirestore db = FirebaseFirestore.instance;
-        await db.collection("users").doc("${user?.uid}").get().then((event) {
+        await db.collection("users").doc(user?.uid).get().then((event) {
           nn = event.get("name");
+          u.setName = event.get("name");
+          u.setEmail = event.get("email");
           print("${event.get("name")}");
         });
         // String name = await FirebaseFirestore.instance
