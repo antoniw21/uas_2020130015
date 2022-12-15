@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:uas_2020130015/description.dart';
@@ -31,12 +32,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     super.dispose();
   }
 
+  double pageviewheight = 200;
+
   @override
   Widget build(BuildContext context) {
     int pageLength = 5;
-    return Container(
-      margin: const EdgeInsets.all(15),
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Container(
+        margin: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,12 +51,46 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               ),
             ),
             SizedBox(
-              height: 200,
-              child: PageView.builder(
-                controller: pageCon,
-                itemCount: pageLength,
-                itemBuilder: (context, index) {
-                  return _pageItem(index, context);
+              height: pageviewheight,
+              child: StreamBuilder(
+                stream:
+                    FirebaseFirestore.instance.collection('films').snapshots(),
+                builder:
+                    (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                  if (streamSnapshot.data == null) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return PageView.builder(
+                      controller: pageCon,
+                      itemCount: pageLength,
+                      itemBuilder: (context, index) {
+                        //_CastError (type '_JsonQueryDocumentSnapshot' is not a subtype of type 'List<dynamic>' in type cast)
+
+                        // List films = streamSnapshot.data?.docs[index] as List;
+                        // List boxofficefilms = films
+                        //     .where((element) => element['rating'] > 8)
+                        //     .toList();
+                        // print(boxofficefilms);
+                        // print(boxofficefilms[index]);
+                        return Container(
+                          padding: const EdgeInsets.all(10),
+                          child: IconButton(
+                            icon: Image.network(
+                                '${streamSnapshot.data?.docs[index]['image']}',
+                                fit: BoxFit.fill),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DescriptionFilm(),
+                                  ));
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  }
                 },
               ),
             ),
@@ -69,6 +106,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 10,
+              width: 0,
+            ),
             const Text(
               "Other Movies",
               style: TextStyle(
@@ -77,42 +118,58 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               ),
             ),
             Container(
-              height: 700,
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const DescriptionFilm(),
-                          ));
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          height: 100,
-                          width: 100,
-                          child: Image.network(
-                              'https://firebasestorage.googleapis.com/v0/b/uas-2020130015.appspot.com/o/severance?alt=media&token=16da72c8-80db-453f-8c1c-e0486640ee73'),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
+              padding: const EdgeInsets.only(top: 10),
+              height: MediaQuery.of(context).size.height / 2,
+              child: StreamBuilder(
+                stream:
+                    FirebaseFirestore.instance.collection('films').snapshots(),
+                builder:
+                    (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                  if (streamSnapshot.data == null) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return ListView.builder(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: streamSnapshot.data?.docs.length,
+                      itemBuilder: (context, index) {
+                        return OutlinedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const DescriptionFilm(),
+                                ));
+                          },
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 5),
+                                height: 100,
+                                width: 100,
+                                child: Image.network(
+                                    '${streamSnapshot.data?.docs[index]['image']}'),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Text(
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                    '${streamSnapshot.data?.docs[index]['title']}',
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 10, right: 10),
-                          child: const Text(
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            "Batman : Unmask The Truth",
-                          ),
-                        )
-                      ],
-                    ),
-                  );
+                        );
+                      },
+                    );
+                  }
                 },
               ),
             )
@@ -121,22 +178,4 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ),
     );
   }
-}
-
-Widget _pageItem(int index, dynamic context) {
-  return Container(
-    padding: EdgeInsets.all(10),
-    child: IconButton(
-      icon: Image.network(
-          'https://firebasestorage.googleapis.com/v0/b/uas-2020130015.appspot.com/o/severance?alt=media&token=16da72c8-80db-453f-8c1c-e0486640ee73',
-          fit: BoxFit.fill),
-      onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const DescriptionFilm(),
-            ));
-      },
-    ),
-  );
 }
