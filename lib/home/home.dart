@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uas_2020130015/home/ticket.dart';
 
 import 'home_widget.dart';
 import 'me.dart';
-import 'movie_page.dart';
+import 'fav_movie_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +17,8 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     HomePageWidget(),
-    MoviePage(),
+    FavoriteMoviePage(),
+    Ticket(),
     Me(),
   ];
 
@@ -78,8 +80,12 @@ class _HomePageState extends State<HomePage> {
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.movie),
-              label: "Movie",
+              icon: Icon(Icons.favorite),
+              label: "Favorite",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.local_movies),
+              label: "Tickets",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
