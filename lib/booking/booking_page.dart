@@ -26,7 +26,7 @@ class _BookingPageState extends State<BookingPage> {
         stream: FirebaseFirestore.instance.collection('chairs').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
           if (streamSnapshot.data == null) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           } else {
             return Container(
               height: MediaQuery.of(context).size.height,
