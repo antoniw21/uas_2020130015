@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../login/login_page.dart';
 
@@ -11,6 +14,9 @@ class Me extends StatefulWidget {
 }
 
 class _MeState extends State<Me> {
+  final ImagePicker imagePicker = ImagePicker();
+  File? image;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,10 +62,15 @@ class _MeState extends State<Me> {
               backgroundImage: AssetImage("assets/images/noprofile.jpeg"),
             ),
             separatorBox(),
+            ElevatedButton(
+                onPressed: () => pickImage(ImageSource.gallery),
+                child: Text("Ubah Foto Profile")),
+            separatorBox(),
             separatorBox(),
             identity(Icons.person, u.getName),
             separatorBox(),
             identity(Icons.email, u.getEmail),
+            separatorBox(),
             separatorBox(),
             OutlinedButton(
               onPressed: () async {
@@ -77,6 +88,14 @@ class _MeState extends State<Me> {
         ),
       ),
     );
+  }
+
+  pickImage(ImageSource source) async {
+    XFile? xFileImage = await imagePicker.pickImage(source: source);
+    if (xFileImage != null) {
+      image = File(xFileImage.path);
+      setState(() {});
+    }
   }
 }
 

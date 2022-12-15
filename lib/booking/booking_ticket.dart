@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 import 'package:uas_2020130015/booking/description.dart';
@@ -29,6 +30,26 @@ class BookingTicket extends StatefulWidget {
 class _BookingTicketState extends State<BookingTicket> {
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    FirebaseFirestore db = FirebaseFirestore.instance;
+
+    final update = <String, dynamic>{
+      "chair": widget.chair,
+      "title": widget.title,
+      "room": widget.room,
+      "clock": widget.clock,
+      "indexpic": widget.index,
+      "boxoffice": widget.boxoffice,
+    };
+
+    db
+        .collection("users")
+        .doc(user?.uid)
+        .collection('tickets')
+        .doc("${widget.index}")
+        .set(update, SetOptions(merge: true));
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
