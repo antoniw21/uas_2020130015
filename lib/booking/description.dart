@@ -136,30 +136,30 @@ class _DescriptionFilmState extends State<DescriptionFilm> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            OutlinedButton(
-                              onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: const Text(
-                                      "Added to favorite",
-                                    ),
-                                    action: SnackBarAction(
-                                      label: "Undo",
-                                      onPressed: () {
-                                        int fav = widget.index;
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.favorite),
-                                  spaceBox(),
-                                  const Text("Add to favorite"),
-                                ],
-                              ),
-                            ),
+                            // OutlinedButton(
+                            //   onPressed: () {
+                            //     ScaffoldMessenger.of(context).showSnackBar(
+                            //       SnackBar(
+                            //         content: const Text(
+                            //           "Added to favorite",
+                            //         ),
+                            //         action: SnackBarAction(
+                            //           label: "Undo",
+                            //           onPressed: () {
+                            //             int fav = widget.index;
+                            //           },
+                            //         ),
+                            //       ),
+                            //     );
+                            //   },
+                            //   child: Row(
+                            //     children: [
+                            //       const Icon(Icons.favorite),
+                            //       spaceBox(),
+                            //       const Text("Add to favorite"),
+                            //     ],
+                            //   ),
+                            // ),
                             ElevatedButton(
                               onPressed: () {
                                 selected.setIndex = widget.index;
