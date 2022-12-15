@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:uas_2020130015/booking_confirmation.dart';
-import 'package:uas_2020130015/booking_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:uas_2020130015/booking/description.dart';
+import 'package:uas_2020130015/home/home.dart';
+import 'booking/booking_ticket.dart';
 import 'firebase_options.dart';
 import 'login/login_page.dart';
 

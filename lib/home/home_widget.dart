@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:uas_2020130015/description.dart';
+import 'package:flutter/rendering.dart';
+
+import '../booking/description.dart';
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({super.key});
@@ -28,7 +30,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         currentPageValue = 0;
       }
 
-      pageCon.animateToPage(currentPageValue.round(),
+      pageCon.animateToPage(currentPageValue.truncate(),
           duration: const Duration(milliseconds: 350), curve: Curves.easeIn);
     });
     pageCon.addListener(() {
@@ -67,8 +69,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             SizedBox(
               height: pageviewheight,
               child: StreamBuilder(
-                stream:
-                    FirebaseFirestore.instance.collection('films').snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection('boxoffice')
+                    .snapshots(),
                 builder:
                     (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                   if (streamSnapshot.data == null) {
@@ -78,14 +81,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       controller: pageCon,
                       itemCount: pageLength,
                       itemBuilder: (context, index) {
-                        //_CastError (type '_JsonQueryDocumentSnapshot' is not a subtype of type 'List<dynamic>' in type cast)
-
-                        // List films = streamSnapshot.data?.docs[index] as List;
-                        // List boxofficefilms = films
-                        //     .where((element) => element['rating'] > 8)
-                        //     .toList();
-                        // print(boxofficefilms);
-                        // print(boxofficefilms[index]);
                         return Container(
                           padding: const EdgeInsets.all(10),
                           child: IconButton(
@@ -93,11 +88,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 '${streamSnapshot.data?.docs[index]['image']}',
                                 fit: BoxFit.fill),
                             onPressed: () {
+                              int pilih = index;
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const DescriptionFilm(),
+                                    builder: (context) => DescriptionFilm(
+                                        index: pilih, boxoffice: true),
                                   ));
                             },
                           ),
@@ -148,10 +144,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       itemBuilder: (context, index) {
                         return OutlinedButton(
                           onPressed: () {
+                            int pilih = index;
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const DescriptionFilm(),
+                                  builder: (context) => DescriptionFilm(
+                                      index: pilih, boxoffice: false),
                                 ));
                           },
                           child: Row(

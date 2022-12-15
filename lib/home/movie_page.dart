@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uas_2020130015/description.dart';
+import 'package:uas_2020130015/login/login_page.dart';
 
 class MoviePage extends StatefulWidget {
   const MoviePage({super.key});
@@ -45,7 +45,7 @@ class MoviePageState extends State<MoviePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const DescriptionFilm(),
+                          builder: (context) => const LoginPage(),
                         ));
                   },
                   child: Row(

@@ -3,10 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uas_2020130015/user_login.dart';
 import 'package:uas_2020130015/welcome_screen.dart';
 
 import '../home/home.dart';
+import '../model/user_login.dart';
 import 'new_account.dart';
 
 UserLogin u = UserLogin();
