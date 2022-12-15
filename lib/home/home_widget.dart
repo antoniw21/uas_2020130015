@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +16,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   PageController pageCon = PageController();
 
   double currentPageValue = 0.0;
+  late Timer timer;
 
   @override
   void initState() {
     super.initState();
+    timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+      if (currentPageValue < 5) {
+        currentPageValue++;
+      } else {
+        currentPageValue = 0;
+      }
+
+      pageCon.animateToPage(currentPageValue.round(),
+          duration: const Duration(milliseconds: 350), curve: Curves.easeIn);
+    });
     pageCon.addListener(() {
       setState(() {
         currentPageValue = pageCon.page!;
@@ -30,6 +43,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     //ketika pindah page ga di aktifkan - hemat memori
     pageCon.dispose();
     super.dispose();
+    timer.cancel();
   }
 
   double pageviewheight = 200;
