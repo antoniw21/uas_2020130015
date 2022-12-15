@@ -61,13 +61,14 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
-        appBar: AppBar(
-          // leading: IconButton(
-          //     onPressed: () => onWillPop(), icon: const Icon(Icons.arrow_back)),
-          title: const Text("Digital Cinema"),
-          automaticallyImplyLeading: false,
-        ),
+        // appBar: AppBar(
+        //   // leading: IconButton(
+        //   //     onPressed: () => onWillPop(), icon: const Icon(Icons.arrow_back)),
+        //   title: const Text("Digital Cinema"),
+        //   automaticallyImplyLeading: false,
+        // ),
         body: Container(
+          padding: const EdgeInsets.only(top: 20),
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(

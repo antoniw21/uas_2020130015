@@ -18,6 +18,8 @@ class _MeState extends State<Me> {
       margin: const EdgeInsets.all(20),
       child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text.rich(
               textAlign: TextAlign.center,
