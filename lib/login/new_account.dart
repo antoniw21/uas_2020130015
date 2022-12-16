@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uas_2020130015/home/home.dart';
 
 import 'login_page.dart';
 
@@ -61,25 +62,30 @@ class _NewAccountState extends State<NewAccount> {
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
                       title: const Text('Welcome'),
-                      content: const Text('A new account has been created'),
+                      content: const Text(
+                          'A new account has been created\n\nYou are logged in!'),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () {
+                            u.setName = name.text;
+                            u.setEmail = email.text;
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const LoginPage(),
+                                  builder: (context) => const HomePage(),
                                 ));
+                            var hello =
+                                SnackBar(content: Text("Hello ${name.text}"));
+                            ScaffoldMessenger.of(context).showSnackBar(hello);
                           },
                           // onPressed: () => Navigator.pop(context),
-                          child: const Text('Login'),
+                          child: const Text('Ok'),
                         ),
                       ],
                     ),
                   );
                   FirebaseFirestore db = FirebaseFirestore.instance;
 
-                  // Create a new user with a first and last name
                   final user = <String, dynamic>{
                     "name": name.text,
                     "email": email.text,
